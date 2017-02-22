@@ -1,0 +1,6 @@
+name: 'Webform REST'
+type: module
+description: 'Allows submitting webforms via REST'
+dependencies:
+  - webform
+  - rest
