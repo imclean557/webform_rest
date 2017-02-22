@@ -69,7 +69,7 @@ class WebformSubmitResource extends ResourceBase {
     LoggerInterface $logger,
     AccountProxyInterface $current_user) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
-    $this->currentUser = $current_user;   
+    $this->currentUser = $current_user;
   }
 
   /**
@@ -91,7 +91,7 @@ class WebformSubmitResource extends ResourceBase {
       return new Response('', 500);
     }
 
-    // Create webform submittion object.
+    // Create webform submission object.
     $webform_submission = WebformSubmission::create(['webform_id' => $webform_data['webform_id']]);
 
     // Don't submit webform ID
@@ -106,28 +106,27 @@ class WebformSubmitResource extends ResourceBase {
     $form_state = (new FormState())->setValues($webform_data);
 
     // Submit form.
-    \Drupal::formBuilder()->submitForm($entity_form_object, $form_state);    
+    \Drupal::formBuilder()->submitForm($entity_form_object, $form_state);
 
-    $errors = $form_state->getErrors();    
+    $errors = $form_state->getErrors();
 
     // Check there are no validation errors.
     if (empty($errors)) {
-      // Note: Saving webform submission will trigger all handlers
-      // including the sending of email notification and confirmation.
-      try {       
+      // Save webform submission
+      try {
         $webform_submission->save();
         print $webform_submission->id();
       }
       catch (EntityStorageException $e) {
         throw new HttpException(500, 'Internal Server Error', $e);
       }
-      
+
     }
     return new Response('', 200);
 
     // @TODO Handle errors.
   }
 
-  
+
 
 }
