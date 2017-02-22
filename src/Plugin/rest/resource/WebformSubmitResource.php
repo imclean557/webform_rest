@@ -111,22 +111,18 @@ class WebformSubmitResource extends ResourceBase {
     $errors = $form_state->getErrors();
 
     // Check there are no validation errors.
-    if (empty($errors)) {
-      // Save webform submission
-      try {
-        $webform_submission->save();
-        print $webform_submission->id();
-      }
-      catch (EntityStorageException $e) {
-        throw new HttpException(500, 'Internal Server Error', $e);
-      }
-
+    if (!empty($errors)) {
+      return new ResourceResponse($errors);
     }
-    return new Response('', 200);
 
-    // @TODO Handle errors.
+    // Save webform submission
+    try {
+      $webform_submission->save();
+      print $webform_submission->id();
+    } catch (EntityStorageException $e) {
+      throw new HttpException(500, 'Internal Server Error', $e);
+    }
+
   }
-
-
 
 }
