@@ -72,7 +72,7 @@ class WebformSubmitResource extends ResourceBase {
     // Save webform submission
     try {
       $webform_submission->save();
-      print $webform_submission->id();
+      return new ResourceResponse(['sid' => $webform_submission->id()]);
     }
     catch (EntityStorageException $e) {
       throw new HttpException(500, 'Internal Server Error', $e);
