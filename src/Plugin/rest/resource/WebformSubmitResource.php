@@ -22,7 +22,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
  *   id = "webform_submit",
  *   label = @Translation("Webform Submit"),
  *   uri_paths = {
- *     "canonical" = "/webform_submit"
+ *     "canonical" = "/webform_rest/submit"
  *   }
  * )
  */
