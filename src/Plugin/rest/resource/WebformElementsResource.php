@@ -25,13 +25,13 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
  */
 class WebformElementsResource extends ResourceBase {
   /**
-   * Responds to entity GET requests for webform elements.
+   * Responds to GET requests, returns webform elements.
    *
-   * @param $webform_data
-   *   Webform field data and webform ID.
+   * @param $webform_id
+   *   Webform ID.
    *
    * @return \Drupal\rest\ResourceResponse
-   *   The HTTP response object.
+   *   HTTP response object containing webform elements.
    *
    * @throws \Symfony\Component\HttpKernel\Exception\HttpException
    *   Throws HttpException in case of error.
