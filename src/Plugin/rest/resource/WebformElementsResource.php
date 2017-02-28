@@ -25,7 +25,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
  */
 class WebformElementsResource extends ResourceBase {
   /**
-   * Responds to entity POST requests and saves the new entity.
+   * Responds to entity GET requests for webform elements.
    *
    * @param $webform_data
    *   Webform field data and webform ID.
