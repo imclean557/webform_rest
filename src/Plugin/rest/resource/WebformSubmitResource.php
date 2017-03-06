@@ -19,10 +19,11 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
  * Creates a resource for submitting a webform.
  *
  * @RestResource(
- *   id = "webform_submit",
+ *   id = "webform_rest_submit",
  *   label = @Translation("Webform Submit"),
  *   uri_paths = {
- *     "canonical" = "/webform_rest/submit"
+ *     "canonical" = "/webform_rest/submit",
+ *     "https://www.drupal.org/link-relations/create" = "/webform_rest/submit"
  *   }
  * )
  */

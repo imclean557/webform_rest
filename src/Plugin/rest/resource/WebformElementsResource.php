@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
  * Creates a resource for retrieving webform elements.
  *
  * @RestResource(
- *   id = "webform_elements",
+ *   id = "webform_rest_elements",
  *   label = @Translation("Webform Elements"),
  *   uri_paths = {
  *     "canonical" = "/webform_rest/elements/{webform_id}"
