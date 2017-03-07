@@ -68,6 +68,7 @@ class WebformSubmitResource extends ResourceBase {
 
     // Check there are no validation errors.
     if (!empty($errors)) {
+      $errors = ['error' => $errors];
       return new ResourceResponse($errors);
     }
 
