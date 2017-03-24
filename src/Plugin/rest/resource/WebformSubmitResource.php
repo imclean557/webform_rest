@@ -36,7 +36,7 @@ class WebformSubmitResource extends ResourceBase {
    * @throws \Symfony\Component\HttpKernel\Exception\HttpException
    *   Throws HttpException in case of error.
    */
-  public function post($webform_data) {
+  public function post(array $webform_data) {
 
     // Basic check for webform ID.
     if (empty($webform_data['webform_id'])) {
@@ -68,7 +68,7 @@ class WebformSubmitResource extends ResourceBase {
       return new ResourceResponse($errors);
     }
 
-    // Save webform submission
+    // Save webform submission.
     try {
       $webform_submission->save();
       return new ResourceResponse(['sid' => $webform_submission->id()]);

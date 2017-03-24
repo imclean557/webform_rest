@@ -23,7 +23,7 @@ class WebformElementsResource extends ResourceBase {
   /**
    * Responds to GET requests, returns webform elements.
    *
-   * @param integer $webform_id
+   * @param int  $webform_id
    *   Webform ID.
    *
    * @return \Drupal\rest\ResourceResponse
@@ -32,7 +32,7 @@ class WebformElementsResource extends ResourceBase {
    * @throws \Symfony\Component\HttpKernel\Exception\HttpException
    *   Throws HttpException in case of error.
    */
-  public function get($webform_id) {
+  public function get(int $webform_id) {
     if (empty($webform_id)) {
       throw new HttpException(t("Webform ID wasn't provided"));
     }
