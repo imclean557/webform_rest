@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\webform_rest\Plugin\rest\resource\WebformSubmitResource.
- */
-
 namespace Drupal\webform_rest\Plugin\rest\resource;
 
 use Drupal\webform\Entity\WebformSubmission;
@@ -28,10 +23,11 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
  * )
  */
 class WebformSubmitResource extends ResourceBase {
+
   /**
    * Responds to entity POST requests and saves the new entity.
    *
-   * @param $webform_data
+   * @param array $webform_data
    *   Webform field data and webform ID.
    *
    * @return \Drupal\rest\ResourceResponse
@@ -50,7 +46,7 @@ class WebformSubmitResource extends ResourceBase {
     // Create webform submission object.
     $webform_submission = WebformSubmission::create(['webform_id' => $webform_data['webform_id']]);
 
-    // Don't submit webform ID
+    // Don't submit webform ID.
     unset($webform_data['webform_id']);
 
     // Get the form object.

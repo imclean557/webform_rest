@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\webform_rest\Plugin\rest\resource\WebformElementsResource.
- */
-
 namespace Drupal\webform_rest\Plugin\rest\resource;
 
 use Drupal\webform\Entity\Webform;
@@ -24,10 +19,11 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
  * )
  */
 class WebformElementsResource extends ResourceBase {
+
   /**
    * Responds to GET requests, returns webform elements.
    *
-   * @param $webform_id
+   * @param integer $webform_id
    *   Webform ID.
    *
    * @return \Drupal\rest\ResourceResponse
@@ -38,7 +34,7 @@ class WebformElementsResource extends ResourceBase {
    */
   public function get($webform_id) {
     if (empty($webform_id)) {
-      throw new HttpException(t('Webform ID wasn\'t provided'));
+      throw new HttpException(t("Webform ID wasn't provided"));
     }
 
     // Load the webform.
@@ -54,8 +50,8 @@ class WebformElementsResource extends ResourceBase {
       return new ResourceResponse($form['elements']);
     }
 
-    throw new HttpException(t('Can\'t load webform.'));
-   
+    throw new HttpException(t("Can't load webform."));
+
   }
 
 }
