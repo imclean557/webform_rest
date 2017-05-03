@@ -32,7 +32,7 @@ class WebformElementsResource extends ResourceBase {
    * @throws \Symfony\Component\HttpKernel\Exception\HttpException
    *   Throws HttpException in case of error.
    */
-  public function get(int $webform_id) {
+  public function get(string $webform_id) {
     if (empty($webform_id)) {
       throw new HttpException(t("Webform ID wasn't provided"));
     }
