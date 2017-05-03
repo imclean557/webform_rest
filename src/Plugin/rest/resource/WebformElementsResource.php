@@ -23,7 +23,7 @@ class WebformElementsResource extends ResourceBase {
   /**
    * Responds to GET requests, returns webform elements.
    *
-   * @param int $webform_id
+   * @param string $webform_id
    *   Webform ID.
    *
    * @return \Drupal\rest\ResourceResponse
