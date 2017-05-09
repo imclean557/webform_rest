@@ -2,13 +2,11 @@
 
 namespace Drupal\webform_rest\Plugin\rest\resource;
 
-use Drupal\webform\Entity\WebformSubmission;
-use Drupal\Core\Entity\EntityStorageException;
-use Drupal\Core\Form\FormState;
+use Drupal\webform\Entity\Webform;
+use Drupal\webform\WebformSubmissionForm;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * Creates a resource for submitting a webform.
@@ -43,40 +41,39 @@ class WebformSubmitResource extends ResourceBase {
       return new Response('', 500);
     }
 
-    // Create webform submission object.
-    $webform_submission = WebformSubmission::create(['webform_id' => $webform_data['webform_id']]);
+    // Convert to webform values format.
+    $values = [
+      'webform_id' => $webform_data['webform_id'],
+      'entity_type' => NULL,
+      'entity_id' => NULL,
+      'in_draft' => FALSE,
+      'uri' => '/webform/' . $webform_data['webform_id'] . '/api',
+    ];
 
     // Don't submit webform ID.
     unset($webform_data['webform_id']);
 
-    // Get the form object.
-    $entity_form_object = \Drupal::entityTypeManager()
-      ->getFormObject('webform_submission', 'default');
-    $entity_form_object->setEntity($webform_submission);
+    $values['data'] = $webform_data;
 
-    // Initialize the form state.
-    $form_state = (new FormState())->setValues($webform_data);
+    // Check webform is open.
+    $webform = Webform::load($values['webform_id']);
+    $is_open = WebformSubmissionForm::isOpen($webform);
 
-    // Submit form.
-    \Drupal::formBuilder()->submitForm($entity_form_object, $form_state);
+    if ($is_open === TRUE) {
+      // Validate submission.
+      $errors = WebformSubmissionForm::validateValues($values);
 
-    $errors = $form_state->getErrors();
-
-    // Check there are no validation errors.
-    if (!empty($errors)) {
-      $errors = ['error' => $errors];
-      return new ResourceResponse($errors);
+      // Check there are no validation errors.
+      if (!empty($errors)) {
+        $errors = ['error' => $errors];
+        return new ResourceResponse($errors);
+      }
+      else {
+        // Return submission ID.
+        $webform_submission = WebformSubmissionForm::submitValues($values);
+        return new ResourceResponse(['sid' => $webform_submission->id()]);
+      }
     }
-
-    // Save webform submission.
-    try {
-      $webform_submission->save();
-      return new ResourceResponse(['sid' => $webform_submission->id()]);
-    }
-    catch (EntityStorageException $e) {
-      throw new HttpException(500, 'Internal Server Error', $e);
-    }
-    return new Response('', 200);
   }
 
 }
