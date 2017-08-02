@@ -6,6 +6,7 @@ use Drupal\webform\Entity\Webform;
 use Drupal\webform\WebformSubmissionForm;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
+use Drupal\rest\ModifiedResourceResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -71,7 +72,7 @@ class WebformSubmitResource extends ResourceBase {
       else {
         // Return submission ID.
         $webform_submission = WebformSubmissionForm::submitValues($values);
-        return new ResourceResponse(['sid' => $webform_submission->id()]);
+        return new ModifiedResourceResponse(['sid' => $webform_submission->id()]);
       }
     }
   }
