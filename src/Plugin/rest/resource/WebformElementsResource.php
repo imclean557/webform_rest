@@ -4,7 +4,7 @@ namespace Drupal\webform_rest\Plugin\rest\resource;
 
 use Drupal\webform\Entity\Webform;
 use Drupal\rest\Plugin\ResourceBase;
-use Drupal\rest\ResourceResponse;
+use Drupal\rest\ModifiedResourceResponse;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
@@ -47,7 +47,7 @@ class WebformElementsResource extends ResourceBase {
       $form = $webform->getSubmissionForm();
 
       // Return only the form elements.
-      return new ResourceResponse($form['elements']);
+      return new ModifiedResourceResponse($form['elements']);
     }
 
     throw new HttpException(t("Can't load webform."));
