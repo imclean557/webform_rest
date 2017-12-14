@@ -7,7 +7,7 @@ use Drupal\webform\WebformSubmissionForm;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
 use Drupal\rest\ModifiedResourceResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Creates a resource for submitting a webform.
@@ -39,7 +39,12 @@ class WebformSubmitResource extends ResourceBase {
 
     // Basic check for webform ID.
     if (empty($webform_data['webform_id'])) {
-      return new Response('', 500);
+      $errors = [
+        'error' => [
+          'code' => '500'
+        ]
+      ];
+      return new JsonResponse($errors, 500);
     }
 
     // Convert to webform values format.
