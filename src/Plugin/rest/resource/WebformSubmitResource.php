@@ -61,8 +61,18 @@ class WebformSubmitResource extends ResourceBase {
 
     $values['data'] = $webform_data;
 
-    // Check webform is open.
+    // Check for a valid webform.
     $webform = Webform::load($values['webform_id']);
+    if (!$webform) {
+      $errors = [
+        'error' => [
+          'message' => 'Invalid webform_id value.'
+        ]
+      ];
+      return new ModifiedResourceResponse($errors);
+    }
+
+    // Check webform is open.
     $is_open = WebformSubmissionForm::isOpen($webform);
 
     if ($is_open === TRUE) {
