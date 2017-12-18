@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
  *   id = "webform_rest_elements",
  *   label = @Translation("Webform Elements"),
  *   uri_paths = {
- *     "canonical" = "/webform_rest/elements/{webform_id}"
+ *     "canonical" = "/webform_rest/{webform_id}/elements"
  *   }
  * )
  */
