@@ -21,7 +21,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class WebformSubmissionResource extends ResourceBase {
 
   /**
-   *  Retrieve submission data.
+   * Retrieve submission data.
    *
    * @param string $webform_id
    *   Webform ID.
@@ -56,14 +56,16 @@ class WebformSubmissionResource extends ResourceBase {
       $data = $webform_submission->getData();
 
       $response = [
+        'entity' => $webform_submission,
         'data' => $data
       ];
 
       // Return the submission.
-      return new ModifiedResourceResponse($data);
+      return new ModifiedResourceResponse($response);
     }
 
     throw new HttpException(t("Can't load webform submission."));
+
   }
 
 }
