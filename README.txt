@@ -5,6 +5,7 @@ Retrieve and submit webforms via REST. Requires the dev version of Webform.
 1. Enable module
 2. Enable REST resource "Webform Submit"
 3. Enable REST resource "Webform Elements"
+4. Enable REST resource "Webform Submission"
 
 Retrieve Webform
 ----------------
@@ -30,3 +31,8 @@ Example POST data:
    "radio_field": "Mail",
    "email": "myemail@mydomain.com.au"
 }
+
+Retrieve Webform Submission
+---------------------------
+
+GET /webform_rest/webform_id/submission/sid?_format=hal_json
