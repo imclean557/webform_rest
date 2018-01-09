@@ -55,6 +55,10 @@ class WebformSubmissionResource extends ResourceBase {
       // Grab submission data.
       $data = $webform_submission->getData();
 
+      $response = [
+        'data' => $data
+      ];
+
       // Return the submission.
       return new ModifiedResourceResponse($data);
     }
