@@ -5,7 +5,6 @@ namespace Drupal\webform_rest\Plugin\rest\resource;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\WebformSubmissionForm;
 use Drupal\rest\Plugin\ResourceBase;
-use Drupal\rest\ResourceResponse;
 use Drupal\rest\ModifiedResourceResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -56,10 +55,10 @@ class WebformSubmitResource extends ResourceBase {
       'uri' => '/webform/' . $webform_data['webform_id'] . '/api',
     ];
 
-    // Don't submit webform ID.
-    unset($webform_data['webform_id']);
-
     $values['data'] = $webform_data;
+
+    // Don't submit webform ID.
+    unset($values['data']['webform_id']);
 
     // Check for a valid webform.
     $webform = Webform::load($values['webform_id']);
@@ -77,16 +76,16 @@ class WebformSubmitResource extends ResourceBase {
 
     if ($is_open === TRUE) {
       // Validate submission.
-      $errors = WebformSubmissionForm::validateValues($values);
+      $errors = WebformSubmissionForm::validateFormValues($values);
 
       // Check there are no validation errors.
       if (!empty($errors)) {
         $errors = ['error' => $errors];
-        return new ResourceResponse($errors);
+        return new ModifiedResourceResponse($errors);
       }
       else {
         // Return submission ID.
-        $webform_submission = WebformSubmissionForm::submitValues($values);
+        $webform_submission = WebformSubmissionForm::submitFormValues($values);
         return new ModifiedResourceResponse(['sid' => $webform_submission->id()]);
       }
     }
