@@ -5,7 +5,7 @@ namespace Drupal\webform_rest\Plugin\rest\resource;
 use Drupal\webform\Entity\WebformSubmission;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ModifiedResourceResponse;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Creates a resource for retrieving webform submission data.
@@ -64,7 +64,7 @@ class WebformSubmissionResource extends ResourceBase {
       return new ModifiedResourceResponse($response);
     }
 
-    throw new HttpException(t("Can't load webform submission."));
+    throw new NotFoundHttpException(t("Can't load webform submission."));
 
   }
 
