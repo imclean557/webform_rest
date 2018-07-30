@@ -49,19 +49,24 @@ class WebformSubmissionResource extends ResourceBase {
     // Load the webform submission.
     $webform_submission = WebformSubmission::load($sid);
 
-    // Basic check to see if something's returned.
-    if ($webform_submission) {
+    // Check for a submission.
+    if (!empty($webform_submission)) {
+      $submission_webform_id = $webform_submission->get('webform_id')->getString();
 
-      // Grab submission data.
-      $data = $webform_submission->getData();
+      // Check webform_id.
+      if ($submission_webform_id == $webform_id) {
 
-      $response = [
-        'entity' => $webform_submission,
-        'data' => $data
-      ];
+        // Grab submission data.
+        $data = $webform_submission->getData();
 
-      // Return the submission.
-      return new ModifiedResourceResponse($response);
+        $response = [
+          'entity' => $webform_submission,
+          'data' => $data
+        ];
+
+        // Return the submission.
+        return new ModifiedResourceResponse($response);
+      }
     }
 
     throw new NotFoundHttpException(t("Can't load webform submission."));
