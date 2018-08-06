@@ -1,18 +1,26 @@
 Webform REST 2.x
 
-Retrieve and submit webforms via REST. Requires the dev version of Webform.
+Retrieve and submit webforms via REST.
 
 1. Enable module
 2. Enable REST resource "Webform Submit"
 3. Enable REST resource "Webform Elements"
-4. Enable REST resource "Webform Submission"
+4. Enable REST resource "Webform Fields"
+5. Enable REST resource "Webform Submission"
 
-Retrieve Webform
-----------------
+Retrieve Webform Elements
+-------------------------
 
-GET /webform_rest/webform_id/elements?_format=hal_json
+Returns all form elements including render array.
 
-To examine the response format, use Restlet Client Chrome plugin or similar.
+GET /webform_rest/{webform_id}/elements?_format=json
+
+Retrieve Webform Fields
+-----------------------
+
+Returns form fields.
+
+GET /webform_rest/{webform_id}/fields?_format=json
 
 Submit Webform
 --------------
@@ -35,4 +43,4 @@ Example POST data:
 Retrieve Webform Submission
 ---------------------------
 
-GET /webform_rest/webform_id/submission/sid?_format=hal_json
+GET /webform_rest/{webform_id}/submission/{sid}?_format=json
