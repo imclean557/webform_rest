@@ -89,6 +89,14 @@ class WebformSubmitResource extends ResourceBase {
         return new ModifiedResourceResponse(['sid' => $webform_submission->id()]);
       }
     }
+    else {
+      $errors = [
+        'error' => [
+          'message' => 'This webform is closed, or too many submissions have been made.'
+        ]
+      ];
+      return new ModifiedResourceResponse($errors);
+    }
   }
 
 }
