@@ -40,6 +40,23 @@ Example POST data:
    "email": "myemail@mydomain.com.au"
 }
 
+Update Webform Submission
+-------------------------
+
+PATCH /webform_rest/{webform_id}/submission/{sid}?_format=json
+
+Example PATCH data:
+
+{
+  "checkboxes_field": [
+    "Option 3",
+    "Option 5"
+   ],
+   "integer_field": 3,
+   "radio_field": "Mail",
+   "email": "myemail@mydomain.com.au"
+}
+
 Retrieve Webform Submission
 ---------------------------
 
