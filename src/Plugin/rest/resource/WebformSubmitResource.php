@@ -6,7 +6,8 @@ use Drupal\webform\Entity\Webform;
 use Drupal\webform\WebformSubmissionForm;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ModifiedResourceResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Creates a resource for submitting a webform.
@@ -38,12 +39,7 @@ class WebformSubmitResource extends ResourceBase {
 
     // Basic check for webform ID.
     if (empty($webform_data['webform_id'])) {
-      $errors = [
-        'error' => [
-          'code' => '500'
-        ]
-      ];
-      return new JsonResponse($errors, 500);
+      throw new BadRequestHttpException("Missing requred webform_id value.");
     }
 
     // Convert to webform values format.
@@ -63,12 +59,7 @@ class WebformSubmitResource extends ResourceBase {
     // Check for a valid webform.
     $webform = Webform::load($values['webform_id']);
     if (!$webform) {
-      $errors = [
-        'error' => [
-          'message' => 'Invalid webform_id value.'
-        ]
-      ];
-      return new ModifiedResourceResponse($errors);
+      throw new BadRequestHttpException('Invalid webform_id value.');
     }
 
     // Check webform is open.
@@ -80,8 +71,10 @@ class WebformSubmitResource extends ResourceBase {
 
       // Check there are no validation errors.
       if (!empty($errors)) {
-        $errors = ['error' => $errors];
-        return new ModifiedResourceResponse($errors);
+        return new ModifiedResourceResponse([
+          'message' => 'Submitted Data contains validation errors.',
+          'error'   => $errors,
+        ], 400);
       }
       else {
         // Return submission ID.
@@ -90,12 +83,7 @@ class WebformSubmitResource extends ResourceBase {
       }
     }
     else {
-      $errors = [
-        'error' => [
-          'message' => 'This webform is closed, or too many submissions have been made.'
-        ]
-      ];
-      return new ModifiedResourceResponse($errors);
+      throw new AccessDeniedHttpException('This webform is closed, or too many submissions have been made.');
     }
   }
 
